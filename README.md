@@ -1,4 +1,5 @@
 # Express Multipart File Parser
+[![npm version](https://badge.fury.io/js/express-multipart-file-parser.svg)](https://badge.fury.io/js/express-multipart-file-parser)
 
 Parser for express that allows file upload with *multipart/form-data*
 
