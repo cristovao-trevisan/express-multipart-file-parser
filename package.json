@@ -1,0 +1,29 @@
+{
+  "name": "express-multipart-file-parser",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristovao-trevisan/express-multipart-file-parser.git"
+  },
+  "author": "Cristóvão Trevisan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cristovao-trevisan/express-multipart-file-parser/issues"
+  },
+  "homepage": "https://github.com/cristovao-trevisan/express-multipart-file-parser#readme",
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
+  },
+  "dependencies": {
+    "busboy": "^0.2.14",
+    "content-type": "^1.0.4",
+    "raw-body": "^2.3.2"
+  }
+}
