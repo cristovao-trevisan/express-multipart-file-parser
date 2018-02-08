@@ -18,9 +18,14 @@ module.exports = [(req, res, next) => {
   } else {
     next()
   }
-}, (req, res, next) => {
+}, (req, res, next) => { // eslint-disable-line consistent-return
   if (req.method === 'POST' && req.headers['content-type'].startsWith('multipart/form-data')) {
-    const busboy = new Busboy({ headers: req.headers })
+    let busboy = null
+    try {
+      busboy = new Busboy({ headers: req.headers })
+    } catch (err) {
+      return next()
+    }
     req.files = []
 
     busboy.on('field', (fieldname, value) => { req.body[fieldname] = value })
