@@ -28,7 +28,10 @@ module.exports = [(req, res, next) => {
     }
     req.files = []
 
-    busboy.on('field', (fieldname, value) => { req.body[fieldname] = value })
+    busboy.on('field', (fieldname, value) => {
+      if (!req.body) req.body = {}
+      req.body[fieldname] = value
+    })
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
       let fileBuffer = Buffer.from('')
