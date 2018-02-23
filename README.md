@@ -18,7 +18,7 @@ app.use(fileParser)
 app.post('/file', (req, res) => {
   const {
     fieldname,
-    filename,
+    originalname,
     encoding,
     mimetype,
     buffer,
