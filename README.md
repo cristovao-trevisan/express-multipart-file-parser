@@ -8,10 +8,11 @@ Parser for express that allows file upload with *multipart/form-data*
 ## Usage
 
 ```js
-const fileMiddleware = require('express-multipart-file-parser')
+// default parser without destructuring
+const fileParser = require('express-multipart-file-parser')
 
 ...
-app.use(fileMiddleware)
+app.use(fileParser)
 ...
 
 app.post('/file', (req, res) => {
@@ -25,3 +26,28 @@ app.post('/file', (req, res) => {
   ...
 })
 ```
+
+### Usage with Options
+
+
+```js
+// must use destructuring for options
+const { fileParser } = require('express-multipart-file-parser')
+
+...
+app.use(fileParser({
+  rawBodyOptions: {
+    limit: '15mb',
+  },
+  busboyOptions: {
+    limits: {
+      fields: 2
+    }
+  },
+}))
+```
+
+## Options
+
+- rawBodyOptions: see [raw-body](https://github.com/stream-utils/raw-body#api)
+- busboyOptions: see [busboy](https://github.com/mscdex/busboy#busboy-methods)

@@ -2,13 +2,13 @@ const Busboy = require('busboy')
 const getRawBody = require('raw-body')
 const contentType = require('content-type')
 
-module.exports = [(req, res, next) => {
+const fileParser = ({ rawBodyOptions, busboyOptions } = {}) => [(req, res, next) => {
   if (req.rawBody === undefined && req.method === 'POST' && req.headers['content-type'].startsWith('multipart/form-data')) {
-    getRawBody(req, {
+    getRawBody(req, Object.assign({
       length: req.headers['content-length'],
       limit: '10mb',
       encoding: contentType.parse(req).parameters.charset,
-    }, (err, rawBody) => {
+    }, rawBodyOptions), (err, rawBody) => {
       if (err) next(err)
       else {
         req.rawBody = rawBody
@@ -22,7 +22,7 @@ module.exports = [(req, res, next) => {
   if (req.method === 'POST' && req.headers['content-type'].startsWith('multipart/form-data')) {
     let busboy = null
     try {
-      busboy = new Busboy({ headers: req.headers })
+      busboy = new Busboy(Object.assign({ headers: req.headers }, busboyOptions))
     } catch (err) {
       return next()
     }
@@ -54,3 +54,6 @@ module.exports = [(req, res, next) => {
     next()
   }
 }]
+
+module.exports = fileParser()
+module.exports.fileParser = fileParser
