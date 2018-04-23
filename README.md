@@ -5,6 +5,8 @@
 
 Parser for express that allows file upload with *multipart/form-data*
 
+**Works with Google Cloud Functions**
+
 ## Usage
 
 ```js
