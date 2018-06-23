@@ -2,9 +2,10 @@ const Busboy = require('busboy')
 const getRawBody = require('raw-body')
 const contentType = require('content-type')
 
+const allowedMethods = ['POST', 'PUT']
 const fileParser = ({ rawBodyOptions, busboyOptions } = {}) => [(req, res, next) => {
   const type = req.headers['content-type']
-  if (req.rawBody === undefined && (req.method === 'POST' || req.method === 'PUT') && type && type.startsWith('multipart/form-data')) {
+  if (req.rawBody === undefined && allowedMethods.includes(req.method) && type && type.startsWith('multipart/form-data')) {
     getRawBody(req, Object.assign({
       length: req.headers['content-length'],
       limit: '10mb',
@@ -19,14 +20,15 @@ const fileParser = ({ rawBodyOptions, busboyOptions } = {}) => [(req, res, next)
   } else {
     next()
   }
-}, (req, res, next) => { // eslint-disable-line consistent-return
+}, (req, res, next) => {
   const type = req.headers['content-type']
-  if ((req.method === 'POST' || req.method === 'PUT') && type && type.startsWith('multipart/form-data')) {
+  if (allowedMethods.includes(req.method) && type && type.startsWith('multipart/form-data')) {
     let busboy = null
     try {
       busboy = new Busboy(Object.assign({ headers: req.headers }, busboyOptions))
     } catch (err) {
-      return next()
+      next()
+      return
     }
     req.files = []
 
